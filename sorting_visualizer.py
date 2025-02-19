@@ -243,6 +243,7 @@ def display_fun_fact():
     st.sidebar.write(random.choice(fun_facts))
 
 # Main function to handle user input and visualization
+    # Main function to handle user input and visualization
 def main():
     st.title("Sorting Algorithm Visualizer")
 
@@ -339,11 +340,11 @@ def main():
                 race_results[algo_name] = end_time - start_time
 
                 # Display the progress of each algorithm
-                race_placeholder.write(f"{algo_name} completed in {race_results[algo_name]:.4f} seconds.")
+                race_placeholder.write(f"{algo_name} completed in {race_results[algo_name]:.8f} seconds.")
 
             # Determine the winner
             winner = min(race_results, key=race_results.get)
-            st.success(f"🏆 {winner} is the fastest with a time of {race_results[winner]:.4f} seconds!")
+            st.success(f"🏆 {winner} is the fastest with a time of {race_results[winner]:.8f} seconds!")
 
             # Display the results in a table
             st.write("### Sorting Race Results")
@@ -367,7 +368,7 @@ def main():
         comparisons = st.session_state.comparisons
         swaps = st.session_state.swaps
 
-        if step_index < len(steps):
+        if step_index < len(steps) and step_index < len(explanations):
             arr_step, colors = steps[step_index]
             visualize_sorting(arr_step, colors, algorithm, ax, fig)
             st.write(f"**Step {step_index + 1}:** {explanations[step_index]}")
@@ -384,6 +385,12 @@ def main():
             st.write(f"**Final Sorted Array:** {steps[-1][0]}")
             st.write(f"**Total Comparisons:** {comparisons}")
             st.write(f"**Total Swaps:** {swaps}")
+
+            # Display all steps (text only) at the end
+            st.write("### All Steps:")
+            for i, explanation in enumerate(explanations):
+                st.write(f"**Step {i + 1}:** {explanation}")
+
             if st.button("Reset", key="reset_final_button"):
                 st.session_state.clear()
                 st.rerun()
